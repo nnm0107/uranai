@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <title>うらない</title>
+  <style>
+    body { background-color: #f4f0c6; }
+    #dialog1, #dialog2 {
+      width: 250px;
+      margin: auto;
+      margin-top: 25vh;
+      padding: 30px 20px;
+      text-align: center;
+      border: 1px solid #fffbd5;
+      box-shadow: 2px 2px 4px #fffbd5;
+    }
+    #dialog2 { display: none; }
+    #dialog2 p { font-size: 40px; margin: 0 0 10px 0; }
+    #color { font-size: 16px; margin-top: 8px; }
+    #color-swatch { display: inline-block; width: 18px; height: 18px; vertical-align: middle; margin-left: 8px; border: 1px solid #ccc; }
+    #again { margin-top: 8px; }
+    #item { font-size: 16px; margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <div id="dialog1">
+    <p>あなたの星座はなんですか？</p>
+    <div id="choices">
+      <button>おひつじ座</button>
+      <button>おうし座</button>
+      <button>ふたご座</button>
+      <button>かに座</button>
+      <button>しし座</button>
+      <button>おとめ座</button>
+      <button>てんびん座</button>
+      <button>さそり座</button>
+      <button>いて座</button>
+      <button>やぎ座</button>
+      <button>みずがめ座</button>
+      <button>うお座</button>
+    </div>
+  </div>
+
+  <div id="dialog2">
+    <p id="result">-</p>
+    <div id="color">ラッキーカラー: <span id="color-name">-</span><span id="color-swatch"></span></div>
+    <div id="item">ラッキーアイテム: <span id="item-name">-</span></div>
+    <button id="again">戻る</button>
+  </div>
+
+  <script>
+    const dialog1 = document.getElementById("dialog1");
+    const choices = document.getElementById("choices");
+    const buttons = choices.getElementsByTagName("button");
+    const dialog2 = document.getElementById("dialog2");
+    const result = document.getElementById("result");
+    const again = document.getElementById("again");
+    const colorName = document.getElementById("color-name");
+    const colorSwatch = document.getElementById("color-swatch");
+    const itemName = document.getElementById("item-name");
+
+    const fortunes = ["大吉", "中吉", "小吉", "吉", "末吉", "凶", "大凶"];
+
+    const luckyColors = [
+      { name: "薄紫", code: "#F1B6FF" },
+      { name: "水色", code: "#9AFFFF" },
+      { name: "黄緑", code: "#E7FF87" },
+      { name: "薄黄色", code: "#FDFFBB" },
+      { name: "濃ピンク", code: "#FF3B95" },
+      { name: "オレンジ", code: "#FFAE93" },
+      { name: "ピンク", code: "#FF86F4" }
+    ];
+
+    const luckyItems = [
+      "ネックレス","ハンドクリーム","ハンカチ","キーホルダー","キャンドル",
+      "腕時計","スニーカー","指輪","ヘアアクセサリー","いちご"
+    ];
+
+    function randomFrom(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    for (let i = 0; i < buttons.length; i++) {
+      buttons[i].addEventListener("click", () => {
+        result.textContent = randomFrom(fortunes);
+
+        const color = randomFrom(luckyColors);
+        colorName.textContent = color.name;
+        colorSwatch.style.backgroundColor = color.code;
+
+        itemName.textContent = randomFrom(luckyItems);
+
+        dialog1.style.display = "none";
+        dialog2.style.display = "block";
+      });
+    }
+
+    again.addEventListener("click", () => {
+      dialog2.style.display = "none";
+      dialog1.style.display = "block";
+
+      result.textContent = "-";
+      colorName.textContent = "-";
+      colorSwatch.style.backgroundColor = "transparent";
+      itemName.textContent = "-";
+    });
+  </script>
+</body>
+</html>
